@@ -4,6 +4,7 @@ using namespace std;
 char** crearMatriz(int);
 void printMatrix(char** matrix,int size);
 void freeMatrix(char**& matrix,int size);
+void Juego();
 
 int main(){
     char respuesta = 'S';
@@ -19,7 +20,7 @@ int main(){
     switch(opcion){
         case 1:
             {
-                Juego
+                Juego();
                 break;
             }
     }
@@ -27,6 +28,14 @@ int main(){
     cin >>  respuesta;
     }
     return 0;
+}
+
+void Juego(){
+    char** matrix = NULL;
+    int size = 11;
+    matrix = crearMatriz(size);
+    printMatrix(matrix,size);
+    freeMatrix(matrix,size);
 }
 
 char** crearMatriz(int size){
@@ -40,16 +49,48 @@ char** crearMatriz(int size){
             matrix[i][j] = ' ';
         }
     }
+    matrix[0][0] = 'X';
+    matrix[0][10] = 'X';
+    matrix[10][0] = 'X';
+    matrix[10][10] = 'X';
+    matrix[0][4] = 'M';
+    matrix[0][5] = 'M';
+    matrix[0][6] = 'M';
+    matrix[1][4] = 'M';
+    matrix[1][6] = 'M';
+    matrix[2][5] = 'M';
+    
+    matrix[4][0] = 'M';
+    matrix[5][0] = 'M';
+    matrix[6][0] = 'M';
+    matrix[4][1] = 'M';
+    matrix[6][1] = 'M';
+    matrix[5][2] = 'M';
+
+    matrix[4][10] = 'M';
+    matrix[5][10] = 'M';
+    matrix[6][10] = 'M';
+    matrix[4][9] = 'M';
+    matrix[6][9] = 'M';
+    matrix[5][8] = 'M';
+
+    matrix[0][4] = 'M';
+    matrix[0][4] = 'M';
+    matrix[0][4] = 'M';
+    matrix[0][4] = 'M';
+    matrix[0][4] = 'M';
+    matrix[0][4] = 'M';
     return matrix;
 }
 
 void printMatrix(char** matrix,int size){
     for (int i = 0; i < size; i++){
         for  (int j = 0; j < size; j++){
-            cout << matrix[i][j] << " ";
+            cout << "[" << matrix[i][j] << "] ";
         }
         cout<<endl;
     }
+    cout<<endl;
 }
 
 void freeMatrix(char**& matrix,int size){
