@@ -7,8 +7,8 @@ char** crearMatriz(int);
 void printMatrix(char** matrix,int size);
 void freeMatrix(char**& matrix,int size);
 int comprobarCoordenada(char** matrix,string coordenada, char fichaActual);
-int comprobarMover(char** matrix,string coordenada);
 int indicarFila(char coordenada);
+int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual);
 void Juego();
 
 int main(){
@@ -66,23 +66,23 @@ void Juego(){
         for (int i = guion + 1; i < coordenada.length();i++){
             temp << coordenada.at(i);
         }
-        int columna = stoi(temp.str());
+        int columnaFicha = stoi(temp.str());
+        if (matrix[filaFicha][columnaFicha] = 'W'){
+            fichaActual = 'W';
+        }
         cout << "Ingrese la posicion a donde movera: ";
         string coordenadaMover = "";
         cin >> coordenadaMover;
-        while(comprobarMover(matrix,coordenadaMover) == 0){
+        while(comprobarMover(matrix,coordenadaMover,filaFicha,columnaFicha,fichaActual) == 0){
             cout << "Ingrese la posicion a donde movera: ";
             cin >> coordenadaMover;
         }
         int filaMover = indicarFila(coordenadaMover.at(0));
-        stringstream temp;
-        int guion = coordenadaMover.find('-');
+        guion = coordenadaMover.find('-');
         for (int i = guion + 1; i < coordenadaMover.length();i++){
             temp << coordenadaMover.at(i);
         }
         int columnaMover = stoi(temp.str());
-        mover(matrix,
-
         if (turnoMoscovita){
             turnoMoscovita = false;
         } else {
@@ -93,10 +93,8 @@ void Juego(){
     freeMatrix(matrix,size);
 }
 
-int mover(char** matrix, int filaAct, int columAct,int filaMove, int columMove ){
-}
 
-int comprobarMover(char** matrix,string coordenada){
+int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual){
     int acum = 0;
     int fila = 0;
     int guion = coordenada.find('-');
@@ -122,11 +120,49 @@ int comprobarMover(char** matrix,string coordenada){
                 if (numeroComprobar > 10){
                     return 0;
                 } else {
-                    fila = indicarFila(coordenada.at(0));
-                    cout << "fila = " <<fila <<endl;
-                    cout << "columna = " << numeroComprobar << endl;
-                    cout << matrix[fila][numeroComprobar];
                     if (matrix[fila][numeroComprobar] == ' ' ||  matrix[fila][numeroComprobar] == 'X'){
+                        int filaMover = fila;
+                        int columMover = numeroComprobar;
+                        if (filaMover != filaFicha && columMover != columFicha){
+                            return 0;
+                        }
+                        int inicio = 0;
+                        int fin = 0;
+                        if (filaMover == filaFicha){
+                            if (columMover > columFicha){
+                                inicio = columFicha;
+                                fin = columMover;
+                            } else {
+                                inicio = columMover;
+                                fin = columFicha;
+                            }
+                            for (int i = inicio; i <= fin; i++){
+                                if (matrix[filaFicha][i] != ' '){
+                                    i = fin + 1;
+                                    return 0;
+                                }
+                            }
+                            cout << "dsa";
+                        } else {
+                            if (columMover = columFicha){
+                                if (filaMover > filaFicha){
+                                    inicio = filaFicha;
+                                    fin = filaMover;
+                                } else {
+                                    inicio = filaMover;
+                                    fin = filaFicha;
+                                }
+                            }
+                            for (int i = inicio; i <= fin; i++){
+                                if (matrix[i][columFicha] != ' '){
+                                    i = fin + 1;
+                                    return 0;
+                                }
+                            }
+                        }
+                        if ((filaMover == 0 && columMover == 0) || (filaMover == 0 && columMover == 10) || (filaMover == 10 && columMover == 0) || (filaMover == 10 && columMover == 10) && fichaActual != 'W'){
+                            return 0;
+                        }
                         return 1;
                     } else {
                         return 0;
