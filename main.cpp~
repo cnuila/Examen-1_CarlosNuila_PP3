@@ -1,10 +1,6 @@
 #include<iostream>
 using namespace std;
 
-char** crearMatriz(int);
-void printMatrix(char** matrix,int size);
-void freeMatrix(char**& matrix,int size);
-
 int main(){
     char respuesta = 'S';
     while (respuesta == 'S' || respuesta == 's'){
@@ -19,7 +15,6 @@ int main(){
     switch(opcion){
         case 1:
             {
-                Juego
                 break;
             }
     }
@@ -49,18 +44,5 @@ void printMatrix(char** matrix,int size){
             cout << matrix[i][j] << " ";
         }
         cout<<endl;
-    }
-}
-
-void freeMatrix(char**& matrix,int size){
-    for (int i = 0; i < size; i++){
-        if (matrix[i] != NULL){
-            delete[] matrix[i];
-            matrix[i] = NULL;
-        }
-    }
-    if (matrix != NULL){
-        delete[] matrix;
-        matrix = NULL;
     }
 }
