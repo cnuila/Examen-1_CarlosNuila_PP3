@@ -126,31 +126,29 @@ int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha
                         if (filaMover != filaFicha && columMover != columFicha){
                             return 0;
                         }
-                        cout << "idsa";
                         int inicio = 0;
                         int fin = 0;
                         if (filaMover == filaFicha){
                             if (columMover > columFicha){
-                                inicio = columFicha;
+                                inicio = columFicha+1;
                                 fin = columMover;
                             } else {
                                 inicio = columMover;
-                                fin = columFicha;
+                                fin = columFicha-1;
                             }
                             for (int i = inicio; i <= fin; i++){
                                 if (matrix[filaFicha][i] != ' '){
-                                    i = fin + 1;
                                     return 0;
                                 }
                             }
                         } else {
                             if (columMover = columFicha){
                                 if (filaMover > filaFicha){
-                                    inicio = filaFicha;
+                                    inicio = filaFicha+1;
                                     fin = filaMover;
                                 } else {
                                     inicio = filaMover;
-                                    fin = filaFicha;
+                                    fin = filaFicha-1;
                                 }
                             }
                             for (int i = inicio; i <= fin; i++){
@@ -273,6 +271,31 @@ int comprobarCoordenada(char** matrix,string coordenada, char fichaActual){
                     if (matrix[fila][numeroComprobar] != fichaActual){
                         return 0;
                     } else{
+                        int filaFicha = fila;
+                        int columFicha = numeroComprobar;
+                        if (filaFicha == 0){
+                            if (matrix[0][columFicha+1] != ' ' && matrix[0][columFicha-1] != ' ' && matrix[1][columFicha] != ' '){
+                                return 0;
+                            }
+                        }
+                        if (filaFicha == 10){
+                            if (matrix[10][columFicha+1] != ' ' && matrix[10][columFicha-1] != ' ' && matrix[9][columFicha] != ' '){
+                                return 0;
+                            }
+                        }
+                        if (columFicha == 0){
+                           if (matrix[filaFicha+1][0] != ' ' && matrix[filaFicha-1][0] != ' ' && matrix[filaFicha][1] != ' '){
+                                return 0;
+                            }
+                        }
+                        if (columFicha == 10){
+                           if (matrix[filaFicha+1][10] != ' ' && matrix[filaFicha-1][10] != ' ' && matrix[filaFicha][9] != ' '){
+                                return 0;
+                            }
+                        }
+                        if (matrix[filaFicha+1][columFicha] != ' ' && matrix[filaFicha][columFicha+1] != ' '  && matrix[filaFicha-1][columFicha] != ' ' && matrix[filaFicha][columFicha-1] != ' ' && matrix[filaFicha+1][columFicha+1] != ' ' && matrix[filaFicha-1][columFicha+1] != ' ' && matrix[filaFicha-1][columFicha-1] != ' ' && matrix[filaFicha+1][columFicha+1] != ' '){
+                            return 0;
+                        }
                         return 1;
                     }
                 }
