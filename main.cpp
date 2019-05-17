@@ -1,9 +1,14 @@
 #include<iostream>
+#include<string>
+#include<sstream>
 using namespace std;
 
 char** crearMatriz(int);
 void printMatrix(char** matrix,int size);
 void freeMatrix(char**& matrix,int size);
+int comprobarCoordenada(char** matrix,string coordenada, char fichaActual);
+int comprobarMover(char** matrix,string coordenada);
+int indicarFila(char coordenada);
 void Juego();
 
 int main(){
@@ -34,8 +39,212 @@ void Juego(){
     char** matrix = NULL;
     int size = 11;
     matrix = crearMatriz(size);
+    cout << "Tablero Inicial"<<endl;
     printMatrix(matrix,size);
+    bool turnoMoscovita = true;
+    bool terminoJuego = false;
+    
+    while(!terminoJuego){
+        char fichaActual = ' ';
+        if (turnoMoscovita){
+            fichaActual = 'M';
+        } else {
+            fichaActual = 'S';
+        }
+        
+        string coordenada = "";
+        cout << "Ingrese la coordenada: ";
+        cin >> coordenada;
+
+        while (comprobarCoordenada(matrix,coordenada,fichaActual) == 0){
+            cout <<"Ingrese la coordenada: ";
+            cin >> coordenada;
+        }
+        int filaFicha = indicarFila(coordenada.at(0));
+        stringstream temp;
+        int guion = coordenada.find('-');
+        for (int i = guion + 1; i < coordenada.length();i++){
+            temp << coordenada.at(i);
+        }
+        int columna = stoi(temp.str());
+        cout << "Ingrese la posicion a donde movera: ";
+        string coordenadaMover = "";
+        cin >> coordenadaMover;
+        while(comprobarMover(matrix,coordenadaMover) == 0){
+            cout << "Ingrese la posicion a donde movera: ";
+            cin >> coordenadaMover;
+        }
+        int filaMover = indicarFila(coordenadaMover.at(0));
+        stringstream temp;
+        int guion = coordenadaMover.find('-');
+        for (int i = guion + 1; i < coordenadaMover.length();i++){
+            temp << coordenadaMover.at(i);
+        }
+        int columnaMover = stoi(temp.str());
+        mover(matrix,
+
+        if (turnoMoscovita){
+            turnoMoscovita = false;
+        } else {
+            turnoMoscovita = true;
+        }
+    }
+
     freeMatrix(matrix,size);
+}
+
+int mover(char** matrix, int filaAct, int columAct,int filaMove, int columMove ){
+}
+
+int comprobarMover(char** matrix,string coordenada){
+    int acum = 0;
+    int fila = 0;
+    int guion = coordenada.find('-');
+    if (coordenada.length() < 4){
+        for (int i = 0; i < coordenada.length();i++){
+            if (coordenada.at(i) == '-'){
+                i = coordenada.length();
+            } else {
+                acum++;
+            }
+        }
+        if (acum > 1){
+            return 0;
+        } else{
+            if (coordenada.at(0) != 'A' && coordenada.at(0) != 'B' && coordenada.at(0) != 'C' && coordenada.at(0) != 'D' && coordenada.at(0) != 'E' && coordenada.at(0) != 'F' && coordenada.at(0) != 'G' && coordenada.at(0) != 'H' && coordenada.at(0) != 'I' && coordenada.at(0) != 'J' && coordenada.at(0) != 'K'){
+                return 0;
+            } else {
+                stringstream numero;
+                for (int i = guion + 1; i < coordenada.length();i++){
+                    numero << coordenada.at(i);
+                }
+                int numeroComprobar = stoi(numero.str());
+                if (numeroComprobar > 10){
+                    return 0;
+                } else {
+                    fila = indicarFila(coordenada.at(0));
+                    cout << "fila = " <<fila <<endl;
+                    cout << "columna = " << numeroComprobar << endl;
+                    cout << matrix[fila][numeroComprobar];
+                    if (matrix[fila][numeroComprobar] == ' ' ||  matrix[fila][numeroComprobar] == 'X'){
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        }
+    } else {
+        return 0;
+    }            
+}
+
+int indicarFila(char coordenada){
+    if (coordenada == 'A'){
+            return  0;
+    }
+    if (coordenada == 'B'){
+        return 1;
+    }
+    if (coordenada == 'C'){
+        return 2;
+    }
+    if (coordenada == 'D'){
+        return 3;
+    }
+    if (coordenada == 'E'){
+        return 4;
+    }
+    if (coordenada == 'F'){
+        return 5;
+    }
+    if (coordenada == 'G'){
+        return 6;
+    }
+    if (coordenada == 'H'){
+        return 7;
+    }
+    if (coordenada == 'I'){
+        return 8;
+    }
+    if (coordenada == 'J'){
+        return 9;
+    }
+    if (coordenada == 'K'){
+        return 10;
+    }
+}
+
+int comprobarCoordenada(char** matrix,string coordenada, char fichaActual){
+    int acum = 0;
+    int fila = 0;
+    int guion = coordenada.find('-');
+    if (coordenada.length() < 4){
+        for (int i = 0; i < coordenada.length();i++){
+            if (coordenada.at(i) == '-'){
+                i = coordenada.length();
+            } else {
+                acum++;
+            }
+        }
+        if (acum > 1){  
+            return 0;
+        } else{
+            if (coordenada.at(0) != 'A' && coordenada.at(0) != 'B' && coordenada.at(0) != 'C' && coordenada.at(0) != 'D' && coordenada.at(0) != 'E' && coordenada.at(0) != 'F' && coordenada.at(0) != 'G' && coordenada.at(0) != 'H' && coordenada.at(0) != 'I' && coordenada.at(0) != 'J' && coordenada.at(0) != 'K'){
+                return 0;
+            } else{
+                stringstream numero;
+                for (int i = guion + 1; i < coordenada.length();i++){
+                    numero << coordenada.at(i);                    
+                }
+                int numeroComprobar = stoi(numero.str());
+                if (numeroComprobar > 10){
+                    return 0;
+                } else {
+                    if (coordenada.at(0) == 'A'){
+                        fila = 0;
+                    }
+                    if (coordenada.at(0) == 'B'){
+                        fila = 1;
+                    }
+                    if (coordenada.at(0) == 'C'){
+                        fila = 2;
+                    }
+                    if (coordenada.at(0) == 'D'){
+                        fila = 3;
+                    }
+                    if (coordenada.at(0) == 'E'){
+                        fila = 4;
+                    }
+                    if (coordenada.at(0) == 'F'){
+                        fila = 5;
+                    }
+                    if (coordenada.at(0) == 'G'){
+                        fila = 6;
+                    }
+                    if (coordenada.at(0) == 'H'){
+                        fila = 7;
+                    }
+                    if (coordenada.at(0) == 'I'){
+                        fila = 8;
+                    }
+                    if (coordenada.at(0) == 'J'){
+                        fila = 9;
+                    }
+                    if (coordenada.at(0) == 'K'){
+                        fila = 10;
+                    }
+                    if (matrix[fila][numeroComprobar] != fichaActual){
+                        return 0;
+                    } else{
+                        return 1;
+                    }
+                }
+            }
+        }
+    } else {
+        return 0;
+    }
 }
 
 char** crearMatriz(int size){
