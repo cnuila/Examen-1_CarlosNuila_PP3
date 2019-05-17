@@ -74,12 +74,30 @@ char** crearMatriz(int size){
     matrix[6][9] = 'M';
     matrix[5][8] = 'M';
 
-    matrix[0][4] = 'M';
-    matrix[0][4] = 'M';
-    matrix[0][4] = 'M';
-    matrix[0][4] = 'M';
-    matrix[0][4] = 'M';
-    matrix[0][4] = 'M';
+    matrix[10][4] = 'M';
+    matrix[10][5] = 'M';
+    matrix[10][6] = 'M';
+    matrix[9][4] = 'M';
+    matrix[9][6] = 'M';
+    matrix[8][5] = 'M';
+
+    matrix[4][4] = 'S';
+    matrix[4][5] = 'S';
+    matrix[4][6] = 'S';
+    matrix[3][5] = 'S';
+    
+    matrix[5][4] = 'S';
+    matrix[6][4] = 'S';
+    matrix[5][3] = 'S';
+
+    matrix[6][5] = 'S';
+    matrix[6][6] = 'S';
+    matrix[7][5] = 'S';
+
+    matrix[5][6] = 'S';
+    matrix[5][7] = 'S';
+    
+    matrix[5][5] = 'W';
     return matrix;
 }
 
