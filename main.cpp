@@ -10,7 +10,10 @@ int comprobarCoordenada(char** matrix,string coordenada, char fichaActual);
 int indicarFila(char coordenada);
 int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual);
 void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual, char fichaContrario);
+bool reyCapturado(char** matrix,int size);
+bool reyEsquina(char** matrix);
 void Juego();
+
 
 int main(){
     char respuesta = 'S';
@@ -49,9 +52,11 @@ void Juego(){
         char fichaActual = ' ';
         char fichaContrario = ' ';
         if (turnoMoscovita){
+            cout << "Turno Moscovita" <<endl;
             fichaActual = 'M';
             fichaContrario = 'S';
         } else {
+            cout << "Turno Sueco" <<endl;
             fichaActual = 'S';
             fichaContrario = 'M';
         }
@@ -88,6 +93,9 @@ void Juego(){
         }
         int columnaMover = stoi(temp.str());
         capturaGuardianes(filaFicha,columnaFicha,filaMover,columnaMover,matrix,fichaActual,fichaContrario);
+        printMatrix(matrix,size);
+        terminoJuego = reyCapturado(matrix,size);
+        terminoJuego = reyEsquina(matrix);
         if (turnoMoscovita){
             turnoMoscovita = false;
         } else {
@@ -98,6 +106,36 @@ void Juego(){
     freeMatrix(matrix,size);
 }
 
+bool reyCapturado(char** matrix,int size){
+    char rey = ' ';
+    int filaRey = 0;
+    int columRey = 0;
+    for(int i = 0; i < size; i++){
+        for (int j = 0; j < size; j++){
+            if (matrix[i][j] = 'W'){
+                filaRey = i;
+                i = size;
+                columRey = j;
+                j = size;
+            }
+        }
+    }
+    if (matrix[filaRey+1][columRey] == 'M' && matrix[filaRey-1][columRey] == 'M' && matrix[filaRey][columRey-1] == 'M' && matrix[filaRey][columRey+1] == 'M'){
+        cout<< "Ganaron los Moscovitas" <<endl;
+        return true;
+    } else{
+        return false;
+    }
+}
+
+bool reyEsquina(char** matrix){
+    if (matrix[0][0] == 'W' || matrix[0][10] == 'W' || matrix[10][10] == 'W' || matrix[10][0] == 'W'){
+        cout << "Ganaron los Suecos" << endl;
+        return true;
+    } else {
+        return false;
+    }
+}
 void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual, char fichaContrario){
     matrix[filaMover][columMover] = fichaActual;
     matrix[filaFicha][columFicha] = ' ';
