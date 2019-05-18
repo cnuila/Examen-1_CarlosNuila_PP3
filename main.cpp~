@@ -9,7 +9,7 @@ void freeMatrix(char**& matrix,int size);
 int comprobarCoordenada(char** matrix,string coordenada, char fichaActual);
 int indicarFila(char coordenada);
 int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual);
-void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual);
+void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual, char fichaContrario);
 void Juego();
 
 int main(){
@@ -86,6 +86,7 @@ void Juego(){
         for (int i = guion + 1; i < coordenadaMover.length();i++){
             temp << coordenadaMover.at(i);
         }
+        capturaGuardianes(filaFicha,columnaFicha,filaMover,columnaMover,matrix,fichaActual,fichaContrario);
         int columnaMover = stoi(temp.str());
         if (turnoMoscovita){
             turnoMoscovita = false;

@@ -86,8 +86,8 @@ void Juego(){
         for (int i = guion + 1; i < coordenadaMover.length();i++){
             temp << coordenadaMover.at(i);
         }
-        capturaGuardianes(filaFicha,columnaFicha,filaMover,columnaMover,matrix,fichaActual,fichaContrario);
         int columnaMover = stoi(temp.str());
+        capturaGuardianes(filaFicha,columnaFicha,filaMover,columnaMover,matrix,fichaActual,fichaContrario);
         if (turnoMoscovita){
             turnoMoscovita = false;
         } else {
