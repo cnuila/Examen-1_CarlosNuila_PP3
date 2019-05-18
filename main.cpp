@@ -9,6 +9,7 @@ void freeMatrix(char**& matrix,int size);
 int comprobarCoordenada(char** matrix,string coordenada, char fichaActual);
 int indicarFila(char coordenada);
 int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual);
+void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual, char fichaContrario);
 void Juego();
 
 int main(){
@@ -46,10 +47,13 @@ void Juego(){
     
     while(!terminoJuego){
         char fichaActual = ' ';
+        char fichaContrario = ' ';
         if (turnoMoscovita){
             fichaActual = 'M';
+            fichaContrario = 'S';
         } else {
             fichaActual = 'S';
+            fichaContrario = 'M';
         }
         
         string coordenada = "";
@@ -82,6 +86,7 @@ void Juego(){
         for (int i = guion + 1; i < coordenadaMover.length();i++){
             temp << coordenadaMover.at(i);
         }
+        capturaGuardianes(filaFicha,columnaFicha,filaMover,columnaMover,matrix,fichaActual,fichaContrario);
         int columnaMover = stoi(temp.str());
         if (turnoMoscovita){
             turnoMoscovita = false;
@@ -93,6 +98,62 @@ void Juego(){
     freeMatrix(matrix,size);
 }
 
+void capturaGuardianes(int filaFicha, int columFicha, int filaMover, int columMover, char** matrix,char fichaActual, char fichaContrario){
+    matrix[filaMover][columMover] = fichaActual;
+    matrix[filaFicha][columFicha] = ' ';
+    if (filaMover>2 && filaMover < 9){
+        if (matrix[filaMover+1][columMover] == fichaContrario && matrix[filaMover+2][columMover] == fichaActual){
+            matrix[filaMover+1][columMover] = ' ';
+        }
+        if (matrix[filaMover-1][columMover] == fichaContrario && matrix[filaMover+2][columMover] == fichaActual){
+            matrix[filaMover-1][columMover] = ' ';
+        }
+        if (columMover == 0){
+            if (matrix[filaMover][columMover+1] == fichaContrario && matrix[filaMover][columMover+2] == fichaActual){
+            matrix[filaMover][columMover+1] = ' ';
+            }
+        }
+        if (columMover == 10){
+            if (matrix[filaMover][columMover-1] == fichaContrario && matrix[filaMover][columMover-2] == fichaActual){
+            matrix[filaMover][columMover-1] = ' ';
+            }
+        }
+        if (columMover != 10 && columMover != 0){
+            if (matrix[filaMover][columMover-1] == fichaContrario && matrix[filaMover][columMover-2] == fichaActual){
+                matrix[filaMover][columMover-1] = ' ';
+            }
+            if (matrix[filaMover][columMover+1] == fichaContrario && matrix[filaMover][columMover+2] == fichaActual){
+            matrix[filaMover][columMover+1] = ' ';
+            }
+        }
+    }
+    if (columMover > 2 && columMover < 9){
+        if (matrix[filaMover][columMover+1] == fichaContrario && matrix[filaMover][columMover+2] == fichaActual){
+            matrix[filaMover][columMover+1] = ' ';
+        }   
+        if (matrix[filaMover][columMover-1] == fichaContrario && matrix[filaMover][columMover-2] == fichaActual){
+            matrix[filaMover][columMover-1] = ' ';
+        }
+        if (filaMover == 0){
+            if (matrix[filaMover+1][columMover] == fichaContrario && matrix[filaMover+2][columMover] == fichaActual){
+            matrix[filaMover+1][columMover] = ' ';
+            }
+        }
+        if (filaMover == 10){
+            if (matrix[filaMover-1][columMover] == fichaContrario && matrix[filaMover-2][columMover] == fichaActual){
+            matrix[filaMover-1][columMover] = ' ';
+            }
+        }
+        if (filaMover != 10 && filaMover != 0){
+            if (matrix[filaMover-1][columMover] == fichaContrario && matrix[filaMover-2][columMover] == fichaActual){
+                matrix[filaMover-2][columMover] = ' ';
+            }
+            if (matrix[filaMover+1][columMover] == fichaContrario && matrix[filaMover+2][columMover] == fichaActual){
+            matrix[filaMover+1][columMover] = ' ';
+            }
+        }
+    }
+}
 
 int comprobarMover(char** matrix,string coordenada,int filaFicha, int columFicha, char fichaActual){
     int acum = 0;
